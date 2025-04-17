@@ -1,1 +1,180 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+    <meta itemprop="name" content="RIS Docs" />
+    <meta property="og:title" content="RIS Docs" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Page title  -->
+    <title>RIS Documentation</title>
+
+    <link rel="stylesheet" href="../css/equery.css" />
+    <link rel="stylesheet" href="../css/docs.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet" />
+	<script type="text/javascript" src="../js/equery.js"></script>
+</head>
+
+<body>
+    <div class="e-text-white" style="font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', 'Roboto'">
+        <nav class="e-padding e-gray-800">
+            <div class="e-flex item-center justify-between e-center">
+                <a class="e-large e-bold" href="/" style="font-size: 18px">RIS Documentation</a>
+                <div class="e-flex justify-evenly">
+                    <a class="e-text-white e-hover-text-gray e-margin-left e-medium" href="/">Home</a>
+                    <a class="e-text-white e-hover-text-gray e-margin-left e-medium" href="/manual/">Documentation</a>
+                    <a class="e-text-white e-hover-text-gray e-margin-left e-medium" href="/manual#setup/">Setup Guide</a>
+                    <a class="e-text-white e-hover-text-gray e-margin-left e-medium" href="/about/">About</a>
+                    <a class="e-text-white e-hover-text-gray e-margin-left e-medium" href="/contact/">Contact</a>
+                </div>
+            </div>
+        </nav>
+		<div class="e-row">
+			<div id="panel" class="e-flex flex-column" style="position: fixed;z-index: 100;left: 0px;width: 200px;height: 100%;overflow: auto;">
+				<div id="header" class="e-flex align-center" style="height: 48px">
+					<h3 class="e-flex flex-1 align-center e-padding-left e-text-blue"><a href="#">Manual</a></h3>
+					<div id="expandButton"></div>
+				</div>
+				<div id="contentWrapper" class="e-flex flex-column flex-1">
+					<div id="content" class="flex-1 e-padding-left e-padding-right e-padding-bottom"></div>
+				</div>
+			</div>
+			<iframe class="e-col m9" name="viewer" style="position: absolute;border: 0px;left: 0px;right: 0;width: 100%;height: calc(100% - 47px);overflow: auto;" src="/manual/intro.html"></iframe>
+		</div>
+	</div>
+	<script>
+let panel = document.querySelector('#panel');
+let content = document.querySelector('#content');
+let panelScrim = document.querySelector('#panelScrim');
+let iframe = document.querySelector('iframe');
+
+let pageProperties = {};
+let titles = {};
+let categoryElements = [];
+
+let navigation;
+
+init();
+
+async function init() {
+	let list = await(await fetch('list.json')).json();
+	let hash = window.location.hash.substring(1);
+	EQuery(panelScrim).click(function (e) {
+		e.preventDefault();
+		EQuery(panel).toggleClass('open');
+	});
+	EQuery(window).on('popstate', createNewIframe);
+	createNavigation(list);
+	createNewIframe();
+}
+
+function createLink(pageName, pageURL) {
+	let link = EQuery.elemt('a', pageName, 'e-display-container e-text-grey e-hover-text-blue', {href: `${pageURL}.html`, target: 'viewer'}, 'display: block;margin: 1px 0;padding: 8px 12px;font-size: 18px;');
+	EQuery(link).click(function (e) {
+		if (event.button !== 0 || event.ctrlKey || event.altKey || event.metaKey) return;
+		window.location.hash = pageURL;
+		EQuery(panel).removeClass('open');
+		EQuery(content).find('a').removeClass('selected');
+		EQuery(link).addClass('selected');
+	});
+	return link;
+}
+
+function createNavigation(list) {
+	if (navigation !== undefined) {
+		content.removeChild(navigation);
+	}
+
+	let pages = list['manual'];
+	let listContainer = EQuery.elemt('ul', null, null, null, 'list-style-type: none;padding: 0px;margin: 0px 0 20px 0;');
+	navigation = EQuery.elemt('div', [listContainer]);
+
+	for (let pageName in pages) {
+		let pageURL = pages[pageName];
+
+		let link = createLink(pageName, pageURL);
+		let list = EQuery.elemt('li', [link]);
+		EQuery(listContainer).addChild([list]);
+
+		pageProperties[pageName] = {
+			pageURL: pageURL,
+			link: link
+		};
+		titles[pageURL] = pageName;
+	}
+	EQuery(content).addChild([navigation]);
+}
+
+function updateFilter() {
+	let regExp = new RegExp(filterInput.value, 'gi');
+
+	for (let pageName in pageProperties) {
+
+		let linkElement = pageProperties[pageName].linkElement;
+		let categoryClassList = linkElement.parentElement.classList;
+		let filterResults = pageName.match(regExp);
+
+		if (filterResults && filterResults.length > 0) {
+			for (let i = 0; i < filterResults.length; i ++) {
+				let result = filterResults[i];
+				if (result !== '') {
+					pageName = pageName.replace(result, '<b>' + result + '</b>');
+				}
+			}
+			EQuery(linkElement.parentElement).removeClass('hidden');
+			linkElement.innerHTML = pageName;
+		} else {
+			EQuery(linkElement.parentElement).addClass('hidden');
+		}
+	}
+}
+
+function setUrlFragment(pageName) {
+	let splitPageName = decomposePageName(pageName, '.', '.');
+	let currentProperties = pageProperties[splitPageName[0]];
+	if (currentProperties) {
+		window.location.hash = currentProperties.pageURL + splitPageName[1];
+		createNewIframe();
+	}
+}
+
+function createNewIframe() {
+	let hash = window.location.hash.substring(1);
+	let splitHash = decomposePageName(hash, '.', '#');
+	let subtitle;
+	let parent = iframe.parentElement;
+	let oldIframe = iframe;
+	iframe = oldIframe.cloneNode();
+
+	if (hash) {
+		iframe.src = splitHash[0] + '.html' + splitHash[1];
+		subtitle = titles[splitHash[0]] + splitHash[1] + ' – ';
+	} else {
+		iframe.src = '';
+		subtitle = '';
+	}
+	parent.replaceChild(iframe, oldIframe);
+	document.title = subtitle + 'RIS docs';
+}
+
+function decomposePageName(pageName, oldDelimiter, newDelimiter) {
+	let parts = [];
+	let dotIndex = pageName.indexOf(oldDelimiter);
+	if (dotIndex !== - 1) {
+		parts = pageName.split(oldDelimiter);
+		parts[1] = newDelimiter + parts[1];
+	} else {
+		parts[0] = pageName;
+		parts[1] = '';
+	}
+	return parts;
+}
+	</script>
+</body>
+
+</html>

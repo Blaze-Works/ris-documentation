@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<script src="/js/page.js"></script>
+		<link type="text/css" rel="stylesheet" href="/css/page.css" />
+	</head>
+	<body>
+        <h1>Example Programs</h1>
+        <h2>1. Bootloader</h2>
+        <p>Initializes the operating system and displays system information.</p>
+        <code>VAR BOOT_MSG >> "Booting RIS OS..."
+PRN $BOOT_MSG
+MEM SIZE
+PROC CREATE init
+SYS DIR
+INT 0
+HLT</code>
+        <h2>2. Interactive Shell</h2>
+        <p>Simulates a command-line interface.</p>
+        <code>VAR PROMPT >> "RIS> "
+:loop
+PRN $PROMPT
+VAR cmd <<
+PROC CREATE shell
+SYS DIR
+GOTO loop
+HLT</code>
+        <h2>3. Process Monitor</h2>
+        <p>Demonstrates process creation and management.</p>
+        <code>PROC CREATE main
+PROC CREATE worker1
+PROC LIST
+PROC KILL 1
+PROC LIST
+HLT</code>
+        <h2>4. File System Explorer</h2>
+        <p>Shows how to manipulate files.</p>
+        <code>FILE WRITE log.txt "System Log Initialized"
+FILE READ log.txt
+FILE DELETE log.txt
+HLT</code>
+    </body>
+</html>

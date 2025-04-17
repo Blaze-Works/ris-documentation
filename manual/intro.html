@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<script src="/js/page.js"></script>
+		<link type="text/css" rel="stylesheet" href="/css/page.css" />
+	</head>
+	<body>
+		<h1>Introduction</h1>		
+        <p>Reverse Instruction Set (RIS) is a low-level, assembly-like programming language designed for building operating systems. RIS combines simplicity and extensibility, making it suitable for managing hardware, memory, processes, and file systems. It includes robust support for <b>system interrupts</b>, <b>memory management</b>, <b>process handling</b>, and <b>file operations</b></p>
+		<h2>Core Design Principles</h2>
+		<ol>
+			<li><b>Efficiency</b>: Optimized for fast execution in resource-constrained environments.
+			<li><b>Clarity</b>: Easy-to-read syntax to minimize errors during OS development.</li>
+			<li><b>Extensibility</b>: Flexible interrupt and process management for future feature integration.</li>
+			<li><b>Portability</b>: Designed for cross-platform compatibility with standard development tools.</li>
+		</ol>
+		<h2>Examples</h2>
+		<p>The core of RIS is focused on the most important components of OS development. Many other useful features — such as memory, processes, and file system — are part of the <a href="./examples.html">examples</a> directory. They are referred to as "examples," because while you can use them off the shelf, they're also meant to be remixed and customized.</p>
+		<p>Below is an example of a basic shell</p>
+		<code>
+			VAR PROMPT >> RIS>
+		:loop
+		PRN $PROMPT
+		VAR cmd <<
+		PROC CREATE shell
+		SYS DIR
+		INT 0
+		GOTO loop
+		HLT
+		</code>
+	</body>
+</html>

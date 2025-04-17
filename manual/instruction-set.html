@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<script src="/js/page.js"></script>
+		<link type="text/css" rel="stylesheet" href="/css/page.css" />
+	</head>
+	<body>
+		<h1>Instruction set</h1>		
+        <h2>1. Basic Instructions</h2>
+
+        <h3><b>PRN</b>: Print Output</h3>
+        <p>Prints data to the standard output (e.g., terminal).</p>
+        <code>PRN message          ; Print a direct message
+PRN $variable        ; Print the content of a variable</code>
+        <h3><b>VAR</b>: Variable Operations</h3>
+        <p>Handles runtime variables for dynamic data storage and manipulation.</p>
+        <code>VAR name &gt;&gt; value    ; Set variable with a value
+VAR name &lt;&lt;          ; Read user input into the variable</code>
+        <h3><b>HLT</b>: Halt Execution</h3>
+        <p>Terminates the current program or process.</p>
+        <code>HLT                  ; Stop execution</code>
+
+        <h2><b>2. Memory Management</b></h2>
+        <p>Memory management instructions allow interaction with a byte-addressable memory space.</p>
+        <h3>Instructions:</h3>
+        <ul>
+            <li><code>MEM READ address</code> Reads the value stored at a specific memory address.</li>
+            <li><code>MEM WRITE address value</code> Writes a value to a memory address.</li>
+            <li><code>MEM SIZE</code> Displays the total size of the available memory.</li>
+        </ul>
+        <h3>Example:</h3>
+        <code>MEM WRITE 0 42        ; Write value 42 to memory address 0
+MEM READ 0            ; Read value from memory address 0
+MEM SIZE              ; Print total memory size</code>
+
+        <h2><b>3. Process Management</b></h2>
+        <p>RIS supports process creation, listing, and termination.</p>
+        <h3>Instructions:</h3>
+        <ul>
+            <li><code>PROC CREATE name</code> Creates a new process with a specified name.</li>
+            <li><code>PROC LIST</code> Lists all active processes along with their Process IDs (PIDs).</li>
+            <li><code>PROC KILL pid</code> Terminates a process by its PID.</li>
+        </ul>
+        <h3>Example:</h3>
+        <code>PROC CREATE worker    ; Create a process named 'worker'
+PROC LIST             ; List all active processes
+PROC KILL 1           ; Terminate process with PID 1</code>
+        <h2><b>4. File System Operations</b></h2>
+        <p>RIS facilitates file operations, such as reading, writing, and deleting files.</p>
+        <h3>Instructions:</h3>
+        <ul>
+            <li><code>FILE READ filename</code> Reads and outputs the contents of a file.</li>
+            <li><code>FILE WRITE filename content</code> Creates or overwrites a file with the given content.</li>
+            <li><code>FILE DELETE filename</code> Deletes the specified file.</li>
+        </ul>
+        <h3>Example:</h3>
+        <code>FILE WRITE config.txt "System Configurations"
+FILE READ config.txt
+FILE DELETE config.txt</code>
+        <h2><b>5. System Operations</b></h2>
+        <p>Commands for directory and system state management.</p>
+        <h3>Instructions:</h3>
+        <ul>
+            <li><code>SYS DIR</code> Lists the contents of the current directory.</li>
+            <li><code>SYS CD path</code> Changes the working directory to the specified path.</li>
+            <li><code>SYS SLEEP ms</code> Pauses execution for the specified time in milliseconds.</li>
+        </ul>
+        <h3>Example:</h3>
+        <code>SYS DIR              ; List files in the current directory
+SYS CD /home/user    ; Change directory to /home/user
+SYS SLEEP 1000       ; Sleep for 1 second</code>
+
+        <h2><b>6. Interrupt Handling</b></h2>
+        <p>Interrupts provide access to low-level system functionalities.</p>
+        <h3>Predefined Interrupts:</h3>
+        <ul>
+            <li><code>INT 0</code> Queries system status, such as uptime and CPU usage.</li>
+            <li><code>INT 1</code> Dumps the current memory state for debugging.</li>
+        </ul>
+        <h3>Example:</h3>
+        <code>INT 0                ; Output system status
+INT 1                ; Perform a memory dump</code>
+	</body>
+</html>

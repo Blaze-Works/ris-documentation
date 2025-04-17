@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<script src="/js/page.js"></script>
+		<link type="text/css" rel="stylesheet" href="/css/page.css" />
+	</head>
+	<body>
+        <h1>Best Practices for OS Development</h1>
+        <h2>Initialization</h2>
+        <ol>
+            <li>Start by defining essential variables and processes.</li>
+            <li>Allocate memory blocks for critical resources.</li>
+        </ol>
+        <h2>Error Handling</h2>
+        <ol>
+            <li>Check for invalid memory access (e.g., reading from unallocated addresses).</li>
+            <li>Verify process IDs before attempting to terminate or list processes.</li>
+            <li>Ensure file operations handle missing or locked files gracefully.</li>
+        </ol>
+        <h2>Memory Cleanup</h2>
+        <p>Release memory and terminate processes that are no longer required to prevent resource leaks.</p>
+    </body>
+</html>

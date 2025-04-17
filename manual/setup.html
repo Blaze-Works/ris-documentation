@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<script src="/js/page.js"></script>
+		<link type="text/css" rel="stylesheet" href="/css/page.css" />
+	</head>
+	<body>
+        <h1>Setup</h1>
+        <h2>Development Environment</h2>
+        <h3>Recommended Tools</h3>
+        <ol>
+            <li>
+                <h4>Visual Studio 2022</h4>
+                <p> - Create a C++ Project and set the language version to C++17 or later.</p>
+            </li>
+            <li>
+                <h4>VSCode</h4>
+                <p> - Install the C/C++ extension and configure build tasks foe C++17</p>
+            </li>
+            <li>
+                <h4>GCC/Clang</h4>
+                <p> - Compile using: <code class="inline">g++ -std=c++17 ris.cpp -o ris</code>.</p>
+            </li>
+        </ol>
+        <h2>Error Handling Mechanisms</h2>
+        <p>The RIS interpreter includes built-in checks for:</p>
+        <ul>
+            <li>Invalid memory or process operations.</li>
+            <li>Missing files or invalid file paths.</li>
+            <li>Incorrect command syntax.</li>
+        </ul>
+        <h2>Future Expansion</h2>
+        <p>The RIS system can be extended with:</p>
+        <ol>
+            <li><b>Virtual Memory</b>: Implement paging and swapping.</li>
+            <li><b>Networking</b>: Support TCP/IP stack and communication protocols.</li>
+            <li><b>Device Drivers</b>: Interface with hardware peripherals.</li>
+            <li><b>Security</b>: Add process isolation and user permissions.</li>
+        </ol>
+    </body>
+</html>

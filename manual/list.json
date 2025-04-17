@@ -1,0 +1,10 @@
+{
+    "manual": {
+        "Introduction": "intro",
+        "Setup": "setup",
+        "Instruction set": "instruction-set",
+        "Advanced Features": "advanced-features",
+        "Best Practices for OS development": "best-practices",
+        "Examples Programs": "examples"
+    }
+}
