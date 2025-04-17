@@ -1,0 +1,16 @@
+:root {color-scheme: light dark;--color-blue: #049EF4;--text-color: #444;--font-size: 16px;--line-height: 26px;--border-style: 1px solid #E8E8E8;--panel-width: 200px;--page-padding: 24px;--max-width: 760px;--icon-size: 20px;}
+@media (prefers-color-scheme: dark) {
+    :root {	--text-color: #bbb;--border-style: 1px solid #444;}
+}
+@font-face {font-family: 'Roboto Mono';src: local('Roboto Mono'), local('RobotoMono-Regular'), url('../files/RobotoMono-Regular.woff2') format('woff2');font-style: normal;font-weight: 400;}
+@font-face {font-family: 'Inter';font-style: normal;font-weight: 400;src: local('Inter-Regular'), url("../files/Inter-Regular.woff2?v=3.6") format("woff2");}
+@font-face {font-family: 'Inter';font-style: normal;font-weight: 600;src: local('Inter-SemiBold'), url("../files/Inter-SemiBold.woff2?v=3.6") format("woff2");}
+html {font-family: 'Inter', sans-serif;font-size: var(--font-size);line-height: var(--line-height);}
+body {color: var(--text-color);tab-size: 4;overflow: auto;word-break: break-word;}
+body.rtl h1, body.rtl h2, body.rtl h3, body.rtl h4, body.rtl p, body.rtl ul, body.rtl ol, body.rtl table {direction: rtl !important;}
+body.rtl code {direction: ltr !important;}
+a {color: var(--color-blue);cursor: pointer;text-decoration: none;}
+#panel {border-right: var(--border-style) !important}
+#header {border-bottom: var(--border-style)}
+#content a {color: var(--text-color) !important;}
+#content a:hover {color: var(--color-blue) !important}
